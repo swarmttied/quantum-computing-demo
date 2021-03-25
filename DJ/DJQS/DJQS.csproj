@@ -6,4 +6,8 @@
     <ExecutionTarget>ionq.qpu</ExecutionTarget>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="README.md" />
+  </ItemGroup>
+
 </Project>

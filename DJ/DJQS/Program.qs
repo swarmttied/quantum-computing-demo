@@ -9,19 +9,19 @@
     @EntryPoint()
     operation DJMain() : Result[] {
      
-        mutable res  = [Zero,Zero,Zero,Zero];
+        mutable results  = [Zero,Zero,Zero,Zero];
         let oracles = [Const0, Const1, Balanced0, Balanced1];
         
         for i in 0 .. Length(oracles)-1 {            
-            set res w/= i <- Deutch(oracles[i]);          
+            set results w/= i <- Deutch(oracles[i]);          
         }               
 
-        return res;
+        return results;
     }
 
     operation Deutch(oracle: ((Qubit[]) => Unit)) : Result {
         use qubits = Qubit[2] {
-           
+                    
             X(qubits[1]);
 
             H(qubits[0]);
@@ -31,11 +31,11 @@
 
             H(qubits[0]);
 
-            let res = M(qubits[0]);
+            let result = M(qubits[0]);
 
             ResetAll(qubits);
 
-            return res;
+            return result;
         }   
     }
 
