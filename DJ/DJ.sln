@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31025.218
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DJCS", "DJCS\DJCS.csproj", "{30A94514-B49A-4EB2-A20C-D6C477DF6E37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DJQS", "DJQS\DJQS.csproj", "{582E8EB2-4468-4547-8164-D4378BDC88D9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{30A94514-B49A-4EB2-A20C-D6C477DF6E37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30A94514-B49A-4EB2-A20C-D6C477DF6E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30A94514-B49A-4EB2-A20C-D6C477DF6E37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30A94514-B49A-4EB2-A20C-D6C477DF6E37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{582E8EB2-4468-4547-8164-D4378BDC88D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{582E8EB2-4468-4547-8164-D4378BDC88D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{582E8EB2-4468-4547-8164-D4378BDC88D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{582E8EB2-4468-4547-8164-D4378BDC88D9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9C912D21-CCCC-4524-9499-6EB0DD51758E}
+	EndGlobalSection
+EndGlobal
