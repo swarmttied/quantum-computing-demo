@@ -16,45 +16,71 @@ namespace DJCS
                                            b0 => b0,
                                            b0 => !b0 };
 
+            Console.WriteLine("1-bit oracles evaluation. (2^1)/2 + 1 = 2 queries needed");
             foreach (var oracle in oracles)
             {
                 // NOTE: 2 queries needed
                 var first = oracle(false);
                 var second = oracle(true);
 
-                Console.Write(first == second ? '0' : '1');
+                Console.Write(first ? "1":"0");                
+                Console.Write(second ? "1":"0");
+                Console.Write(" ");
+
+                var resultBit = first == second ? "0 (Constant)" : "1 (Balanced)";
+
+                Console.WriteLine($"Result bit is {resultBit}");
             }
 
             Console.WriteLine();
+            Console.WriteLine();
 
             var twoBitOracles = new Func<bool,bool,bool>[] {
+                                            // Const
                                             (_,__) => false, // I(b0) or do nothing
                                             (_,__) => true,  // X(b0)
                                             // Balanced
-                                            (b1,b2) =>  b1,                  // CNOT(b1,b0)
-                                            (b1,b2) => !b1,                  // CNOT(b1,b0), X(b0)
-                                            (b1,b2) => {
-                                                            b2=b1; 
+                                            (b0,b1) => b0,    // CNOT(b0,b2)
+                                            (b0,b1) => !b0,   // CNOT(b0,b2), X(b2)
+                                            (b0,b1) => b1,    // CNOT(b1,b2)               
+                                            (b0,b1) => !b1,   // CONT(b1,b2), X(b2)
+                                            (b0,b1) =>  {     
+                                                            // CNOT(b0,b2)                                                       
+                                                            bool b2 = b0;
+
+                                                            // CNOT(b1,b2)
+                                                            if (b1)
+                                                                return !b2;
                                                             return b2;
-                                                        } ,       // CNOT(b2,b0)
-                                            (b1,b2) => {
-                                                            b2=b1; 
+                                                        },
+                                            (b0,b1) =>  {    
+                                                            // CNOT(b0,b2)                                                        
+                                                            bool b2 = b0;
+
+                                                            // CNOT(b1,b2), X(b2)
+                                                            if (b1)
+                                                                return b2;
                                                             return !b2;
-                                                        },   // CNOT(b2,b0) X(b0)
-                                          
-                                        
-                                            
+                                                        }                                   
             };
 
-
+            Console.WriteLine("2-bit oracles evaluation. (2^2)/2 + 1 = 3 queries needed");
             foreach (var oracle in twoBitOracles) 
-            {
-               
-               Console.Write(oracle(false,false)? "1":"0");
-               Console.Write(oracle(false,true)?"1":"0");
-               Console.Write(oracle(true,true)?"1":"0");
-               Console.Write(oracle(true,false)?"1":"0");   
-               Console.WriteLine();           
+            {  
+                var first = oracle(false,false);
+                var second = oracle(false,true);
+                var third = oracle(true,true);        
+                var fourth = oracle(true,false);     
+
+                Console.Write(first ? "1":"0");                
+                Console.Write(second ? "1":"0");
+                Console.Write(third ? "1":"0");
+                Console.Write(fourth ? "1":"0");   
+                Console.Write(" ");
+
+                var resultBit = first == second && second == third ? "0 (Constant)" : "1 (Balanced)";
+
+                Console.WriteLine($"Result bit is {resultBit}");
             }
         }            
     }

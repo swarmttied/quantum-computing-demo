@@ -13,13 +13,13 @@
         let oracles = [Const0, Const1, Balanced0, Balanced1];
         
         for i in 0 .. Length(oracles)-1 {            
-            set results w/= i <- Deutch(oracles[i]);          
+            set results w/= i <- DeutchJozsa(oracles[i]);          
         }               
 
         return results;
     }
 
-    operation Deutch(oracle: ((Qubit[]) => Unit)) : Result {
+    operation DeutchJozsa(oracle: ((Qubit[]) => Unit)) : Result {
         use qubits = Qubit[2] {
                     
             X(qubits[1]);
