@@ -5,9 +5,11 @@ namespace DJCS
     class Program
     {
         static void Main()
-        {
+        {            
             // Just for convenience, we use bool {false=0, true=1}
             // Using "b" for bit
+
+            #region 1-Qubit oracles
             var oracles = new Func<bool, bool>[] {
                                             // Const
                                            _ => false,
@@ -32,8 +34,12 @@ namespace DJCS
                 Console.WriteLine($"Result bit is {resultBit}");
             }
 
+            #endregion
+
             Console.WriteLine();
             Console.WriteLine();
+
+            #region 2-Qbit oracles
 
             var twoBitOracles = new Func<bool,bool,bool>[] {
                                             // Const
@@ -82,6 +88,8 @@ namespace DJCS
 
                 Console.WriteLine($"Result bit is {resultBit}");
             }
+
+            #endregion
         }            
     }
 }

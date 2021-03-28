@@ -9,17 +9,25 @@
     @EntryPoint()
     operation DJMain() : Result[] {
      
+        // 1-qubit oracles
         mutable results  = [Zero,Zero,Zero,Zero];
-        let oracles = [Const0, Const1, Balanced0, Balanced1];
+        let oracles1 = [Const0, Const1, Balanced0, Balanced1];
         
-        for i in 0 .. Length(oracles)-1 {            
-            //set results w/= i <- DeutchJozsa(1,oracles[i]);          
+        // 2-qubit oracles
+        // mutable results  = [Zero,Zero,Zero,Zero,Zero,Zero,Zero,Zero];
+        // let oracles2 = [Const0, Const1, Balanced_2Qubit0, Balanced_2Qubit1, Balanced_2Qubit2, 
+        //                 Balanced_2Qubit3, Balanced_2Qubit4, Balanced_2Qubit5];
+        
+        for i in 0 .. Length(oracles1)-1 {            
+            set results w/= i <- DeutchJozsa(1,oracles1[i]);    // 1-qit oracle
+
+            // set results w/= i <- DeutchJozsa(2,oracles2[i]);   // 2-qubit oracles      
         }               
 
         return results;
     }
 
-    operation DeutchJozsa(bits: Int, oracle: ((Qubit[]) => Unit)) : Result[] {
+    operation DeutchJozsa(bits: Int, oracle: ((Qubit[]) => Unit)) : Result {
         use qubits = Qubit[bits + 1] {
                     
             X(qubits[bits]);
@@ -32,11 +40,19 @@
                 H(qubits[i]);
             }            
 
-            let results = MultiM(qubits);
+            mutable result = Zero;   
+            // Hardcoded logic to cater only for 2-qubit oracle       
+            if  bits == 2 {                
+                ApplyToEach(H, qubits);
+                ApplyToEach(X, [qubits[0], qubits[1]]);
+                CCNOT(qubits[0], qubits[1], qubits[2]);               
+            }
+
+            set result = M(qubits[bits-1]);
 
             ResetAll(qubits);
 
-            return results;
+            return result;
         }   
     }
 
