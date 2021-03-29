@@ -25,8 +25,8 @@ namespace DJCS
                 var first = oracle(false);
                 var second = oracle(true);
 
-                Console.Write(first ? "1":"0");                
-                Console.Write(second ? "1":"0");
+                WriteResult(first);
+                WriteResult(second);
                 Console.Write(" ");
 
                 var resultBit = first == second ? "0 (Constant)" : "1 (Balanced)";
@@ -78,10 +78,10 @@ namespace DJCS
                 var third = oracle(true,true);        
                 var fourth = oracle(true,false);     
 
-                Console.Write(first ? "1":"0");                
-                Console.Write(second ? "1":"0");
-                Console.Write(third ? "1":"0");
-                Console.Write(fourth ? "1":"0");   
+                WriteResult(first);                
+                WriteResult(second);
+                WriteResult(third);
+                WriteResult(fourth);   
                 Console.Write(" ");
 
                 var resultBit = first == second && second == third ? "0 (Constant)" : "1 (Balanced)";
@@ -90,6 +90,8 @@ namespace DJCS
             }
 
             #endregion
-        }            
+        }    
+        
+        static void WriteResult(bool res) => Console.Write(res ? "1" : "0");
     }
 }
