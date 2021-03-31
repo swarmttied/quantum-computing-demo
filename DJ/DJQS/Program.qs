@@ -36,14 +36,14 @@
         mutable results = ConstantArray(Length(oracles),Zero);
         
         for i in 0 .. Length(oracles)-1 {            
-            set results w/= i <- DeutchJozsa(qbitCount,oracles[i]);          
+            set results w/= i <- DeutschJozsa(qbitCount,oracles[i]);          
         }               
 
         return results;
     }
        
 
-    operation DeutchJozsa(bits: Int, oracle: ((Qubit[]) => Unit)) : Result {
+    operation DeutschJozsa(bits: Int, oracle: ((Qubit[]) => Unit)) : Result {
         use qubits = Qubit[bits + 1] {
                     
             X(qubits[bits]);
