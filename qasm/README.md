@@ -1,0 +1,2 @@
+## Using QASM files
+You can import these files directly in the [circuit composer](https://quantum-computing.ibm.com/composer) blade of the IBM Q Experience. In the left side is the code section of the composer. Click on the **...** and then **_Import code_**. 
