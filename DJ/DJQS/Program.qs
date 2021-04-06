@@ -57,11 +57,18 @@
             ApplyToEach(H,qubits);          
 
             mutable result = Zero;   
-            // Hardcoded logic to cater only for 2-qubit oracle       
-            if  bits == 2 {    
-                ApplyToEach(X, [qubits[0], qubits[1]]);
-                CCNOT(qubits[0], qubits[1], qubits[2]);               
+
+            // Hardcoded logic for 1-qubit oracles
+            if (bits == 1){
+                set result = M(qubits[0]);
             }
+        
+            // Hardcoded logicfor 2-qubit oracles     
+            if  bits == 2 {       
+                ApplyToEach(X, [qubits[0], qubits[1]]);
+                CCNOT(qubits[0], qubits[1], qubits[2]);  
+                set result = M(qubits[bits]);
+            }      
 
             set result = M(qubits[bits]);
 
@@ -75,7 +82,9 @@
     //These 2 are universal oracles. It can be used
     // by any n-qubit oracles
     operation Const0(qubits: Qubit[]) : Unit {
-        // do nothing
+        // This is universal and can be used by any
+        // n-qubit oracle. It's equal to doing nothing.
+        ApplyToEach(I, qubits); 
     }
 
 	operation Const1(qubits: Qubit[]) : Unit {      
