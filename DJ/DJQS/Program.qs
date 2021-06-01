@@ -5,27 +5,50 @@
     open Microsoft.Quantum.Convert as Convert;
     open Microsoft.Quantum.Measurement; 
     open Microsoft.Quantum.Arrays;    
-    
+
+    // Why is this construct using 24Qubits?
+    // Is this by design or did I not use the right logic. Works on other 
+    ////////////////////////////////////////////////
     @EntryPoint()
+    operation LoopNQubits() : Result[] {
+        mutable results = ConstantArray(8,Zero);
+        for i in 0 .. 7 {
+            use qubits = Qubit[3] {
+                ApplyToEach(H, qubits);
+                mutable result = Zero;
+                set result = M(qubits[0]);
+                set results w/= i <- result;
+                ResetAll(qubits);
+            }
+        }
+            return results;
+    }
+ 
+    //@EntryPoint()
     operation DJMain() : Result[] {
                
         // 1-qubit oracles        
-        let oracles1Qubit = [Const0, Const1, Balanced0, Balanced1];
+        let oracles1Qubit = [Const0, Const1, Balanced0, Balanced1, Const0, Const1, Balanced0, Balanced1];
         
         // 2-qubit oracles      
         // CAUTION! This causes error in IonQ when submitting all items. 
         // From tests, the max number of items accepted is 3. BUG?
         let oracles2Qubit = [
-                            //Const0
-                            //, Const1
-                              Balanced_2Qubit0
-                            , Balanced_2Qubit1
-                            , Balanced_2Qubit2];
-                        //, Balanced_2Qubit3
-                        //, Balanced_2Qubit4
-                        //, Balanced_2Qubit5];
+			Const0 ,Balanced_2Qubit0,Balanced_2Qubit0,Const0,Balanced_2Qubit0,Const0,Balanced_2Qubit0,Const0];
 
-        // 1-qubit params
+
+
+                          //  ,Const1
+                          //  , Balanced_2Qubit0
+                           // , Balanced_2Qubit1
+                          //  , Balanced_2Qubit2
+                          //  , Balanced_2Qubit3
+                          //  , Balanced_2Qubit4
+                            
+                            //, Balanced_2Qubit5
+                        //    ];
+
+        // 1-qubit p
         //let oracles = oracles1Qubit;
         //let qbitCount = 1;
 
