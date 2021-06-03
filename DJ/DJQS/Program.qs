@@ -6,22 +6,24 @@
     open Microsoft.Quantum.Measurement; 
     open Microsoft.Quantum.Arrays;    
 
-    // Why is this construct using 24Qubits?
-    // Is this by design or did I not use the right logic. Works on other 
+    // The block below seems to show that honeywell.hqs-lt-1.0-apival (10 qbits)
+    // qubits can be reset unlike ionq.qpu.
+    // However, the result below is always zero's 
+    // as if the array result was not affected. Weird!
     ////////////////////////////////////////////////
     @EntryPoint()
-    operation LoopNQubits() : Result[] {
-        mutable results = ConstantArray(8,Zero);
-        for i in 0 .. 7 {
-            use qubits = Qubit[3] {
-                ApplyToEach(H, qubits);
+    operation LoopQubit11X() : Result[] {
+        mutable results = ConstantArray(11,Zero);
+        for i in 0 .. 10 {
+            use qubit = Qubit() {
+                H(qubit);
                 mutable result = Zero;
-                set result = M(qubits[0]);
+                set result = M(qubit);
                 set results w/= i <- result;
-                ResetAll(qubits);
+                Reset(qubit);
             }
         }
-            return results;
+        return results;
     }
  
     //@EntryPoint()
@@ -34,19 +36,15 @@
         // CAUTION! This causes error in IonQ when submitting all items. 
         // From tests, the max number of items accepted is 3. BUG?
         let oracles2Qubit = [
-			Const0 ,Balanced_2Qubit0,Balanced_2Qubit0,Const0,Balanced_2Qubit0,Const0,Balanced_2Qubit0,Const0];
-
-
-
-                          //  ,Const1
-                          //  , Balanced_2Qubit0
-                           // , Balanced_2Qubit1
-                          //  , Balanced_2Qubit2
-                          //  , Balanced_2Qubit3
-                          //  , Balanced_2Qubit4
-                            
-                            //, Balanced_2Qubit5
-                        //    ];
+                             Const0
+                            //,Const1
+                           // , Balanced_2Qubit0
+                            , Balanced_2Qubit1
+                           // , Balanced_2Qubit2
+                            //, Balanced_2Qubit3
+                           // , Balanced_2Qubit4                            
+                            , Balanced_2Qubit5
+                           ];
 
         // 1-qubit p
         //let oracles = oracles1Qubit;
