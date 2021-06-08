@@ -6,51 +6,32 @@
     open Microsoft.Quantum.Measurement; 
     open Microsoft.Quantum.Arrays;    
 
-    // The block below seems to show that honeywell.hqs-lt-1.0-apival (10 qbits)
-    // qubits can be reset unlike ionq.qpu.
-    // However, the result below is always zero's 
-    // as if the array result was not affected. Weird!
-    ////////////////////////////////////////////////
     @EntryPoint()
-    operation LoopQubit11X() : Result[] {
-        mutable results = ConstantArray(11,Zero);
-        for i in 0 .. 10 {
-            use qubit = Qubit() {
-                H(qubit);
-                mutable result = Zero;
-                set result = M(qubit);
-                set results w/= i <- result;
-                Reset(qubit);
-            }
-        }
-        return results;
-    }
- 
-    //@EntryPoint()
     operation DJMain() : Result[] {
                
         // 1-qubit oracles        
         let oracles1Qubit = [Const0, Const1, Balanced0, Balanced1, Const0, Const1, Balanced0, Balanced1];
         
-        // 2-qubit oracles      
-        // CAUTION! This causes error in IonQ when submitting all items. 
-        // From tests, the max number of items accepted is 3. BUG?
+        // WARNING!! 
+        // IonQ.qpu target does NOT allow re-use of qubits even after calling reset.
+        // The number of oracles x qubits per oracle should be less than the qubits.
+        // For example, if there is 11 qubits available, you can only run 3 3-qubit oracles
         let oracles2Qubit = [
                              Const0
-                            //,Const1
-                           // , Balanced_2Qubit0
+                            ,Const1
+                            , Balanced_2Qubit0
                             , Balanced_2Qubit1
-                           // , Balanced_2Qubit2
-                            //, Balanced_2Qubit3
-                           // , Balanced_2Qubit4                            
+                            , Balanced_2Qubit2
+                            , Balanced_2Qubit3
+                            , Balanced_2Qubit4                            
                             , Balanced_2Qubit5
                            ];
 
-        // 1-qubit p
+        // 1-qubit p (2 qubits including ancilla)
         //let oracles = oracles1Qubit;
         //let qbitCount = 1;
 
-        // 2-Qubit params
+        // 2-Qubit params (3 qubits including ancilla)
         let oracles = oracles2Qubit;
         let qbitCount = 2;
 
